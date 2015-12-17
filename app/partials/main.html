@@ -1,0 +1,61 @@
+
+<section id="home" ng-show="home">
+	<div id="homePage">
+		<!-- <img src="logo.jpg"> -->
+		<div>
+		
+		<h1>HOODAT</h1>
+		<p id="subtitle">THE MUSICIAN SEARCH APP</p>
+
+		<input class="middle form-control" type="text" id="search" placeholder="Search For An Artist" ng-model="$parent.searchData">
+
+		<button type="button" class="btn btn-lg btn-danger" ng-click="$parent.search()">Search</button>
+		</div>
+
+		<div id="loginOrRegister">
+			<p>To save your searches, <a href="#/login">login</a> or <a href="#/register">register</a> today!</p>
+		</div>
+
+	</div>
+</section>
+
+<section id="results" ng-show="results">
+
+	<img class="artistimage" src="{{artistPhoto}}" />
+
+	<h2 class="artistname">{{artistName}}</h2>
+
+	<div id="content">
+
+		<p class="bio">{{artistBio}}</p>
+
+		<button type="button" class="btn" ng-class="{'btn-danger': $parent.savedArtist, 'btn-primary': !$parent.savedArtist}" ng-show="loggedIn" ng-click="saveArtist()">{{saveArtistButton}}</button>
+
+		<hr />
+
+		<div id="discography">
+			<a name="discography"></a>
+			<h2>DISCOGRAPHY</h2>
+			<div class="albumResults">
+				<ul class="eachAlbum">
+					<li ng-repeat="album in allAlbums">{{album.name}}</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="videos" class="boxShadow">
+		<a name="videos"></a>
+		<h2>VIDEOS</h2>
+		<div class="error">{{error}}</div>
+		<iframe ng-repeat="video in allVideos" width="100%" height="100%" ng-src="{{getIframeSrc(video.id.videoId)}}" ng-show="videoResults" frameborder="0" allowfullscreen></iframe>
+	</div>
+
+</section>
+
+<div ng-include="'app/partials/lyricModal.html'">
+</div>
+
+<div ng-include="'app/partials/footer.html'">
+</div>

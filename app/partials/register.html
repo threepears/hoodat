@@ -1,0 +1,16 @@
+
+<div id="registerPage">
+	<!-- <img src="logo.jpg"> -->
+	
+	<h2>PLEASE REGISTER</h2>
+	<!-- User inputs email/password for login/register -->
+	<input class="middle form-control" type="text" id="email" placeholder="Enter Your Email" autofocus ng-model="user.email">
+	<input class="middle form-control" type="text" id="username" placeholder="Enter A Username" autofocus ng-model="user.username">
+	<input class="middle form-control" type="password" id="password" placeholder="Enter A Password" ng-model="user.password">
+
+    <button type="button" class="btn btn-primary" ng-click="registerUser()">Register</button>
+
+</div>
+
+<div ng-include="'app/partials/footer.html'">
+</div>

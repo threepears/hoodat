@@ -1,0 +1,17 @@
+
+<div id="loginPage">
+	<!-- <img src="logo.jpg"> -->
+	
+	<h2>PLEASE LOGIN</h2>
+	<!-- User inputs email/password for login/register -->
+	<input class="middle form-control" type="text" id="email" placeholder="Enter Email" autofocus ng-model="user.email">
+	<input class="middle form-control" type="password" id="password" placeholder="Enter Password" ng-model="user.password">
+
+	<button type="button" class="btn btn-danger" ng-click="loginUser()">Login</button>
+
+	<div class="loginError">{{loginError}}</div>
+
+</div>
+
+<div ng-include="'app/partials/footer.html'">
+</div>
