@@ -22,5 +22,9 @@ app.config(['$routeProvider',
         templateUrl: 'app/partials/register.html',
         controller: 'RegisterControl'
       })
+      .when('/pastsearches', {
+        templateUrl: 'app/partials/pastsearches.html',
+        controller: 'PastArtistControl'
+      })
       .otherwise('/main');
   }]);

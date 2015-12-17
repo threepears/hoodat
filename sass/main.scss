@@ -119,8 +119,14 @@ hr {
 	color: $lighterShade;
 }
 
+.navbar-nav {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
 .navbar-form {
 	margin-top: 0;
+	margin-bottom: 0;
 	border-top: 0;
 	padding-bottom: 5px;
 	background-color: $darkAccent;

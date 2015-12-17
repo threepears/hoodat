@@ -30,7 +30,7 @@
 			      <a class="navbar-brand" href="#"><span class="yipee">HOODAT<span></a>
 			    </div>
 
-			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			    <div class="collapse navbar-collapse animate-hide" id="bs-example-navbar-collapse-1">
 			      <form class="navbar-form navbar-left" role="search">
 			        <div class="form-group navSearch">
 			          <input type="text" class="form-control" placeholder="{{searchText}}" ng-model="$parent.searchData" autofocus>
@@ -38,10 +38,12 @@
 			        <button type="button" ng-click="$parent.search();closeNav()" class="btn btn-default btnSearch">Search</button>
 			      </form>
 			      <ul class="nav navbar-nav navbar-right">
-			        <li ng-show="loggedIn"><a href="/main.html#discography">DISCOGRAPHY</a></li>
-			        <li ng-show="loggedIn"><a href="#videos">VIDEOS</a></li>
+			      	<li ng-show="loggedIn"><span class="userGreeting">WELCOME, {{username}}!</span></li>
+			        <!-- <li ng-show="loggedIn" ng-click="gotoAnchor('discography')"><a href="#">DISCOGRAPHY</a></li>
+			        <li ng-show="loggedIn"><a href="#videos">VIDEOS</a></li> -->
 			        <li ng-hide="loggedIn"><a href="#/login">LOGIN</a></li>
-			        <li ng-show="loggedIn"><span class="userGreeting">WELCOME, {{username}}!</span></li>
+			        <li ng-show="loggedIn"><a href="#">PAST SEARCHES</a></li>
+			        <li ng-show="loggedIn" ng-click="logout()"><a href="#">LOGOUT</a></li>
 			      </ul>
 			    </div>
 			  </div>
@@ -74,6 +76,7 @@
 	  	<!-- FACTORY SCRIPTS -->
 	  	<script src="app/factories/FindMusic.js"></script>
 	  	<script src="app/factories/Authenticate.js"></script>
+	  	<script src="app/factories/Keys.js"></script>
 
 	  	<!-- CONTROLLER SCRIPTS -->
 	  	<script src="app/controllers/MasterControl.js"></script>
@@ -81,6 +84,7 @@
 	  	<script src="app/controllers/RegisterControl.js"></script>
 	  	<script src="app/controllers/NavControl.js"></script>
 	  	<script src="app/controllers/MainControl.js"></script>
+	  	<script src="app/controllers/PastArtistControl.js"></script>
 	  	<script src="app/controllers/LyricModalControl.js"></script>
 	  	<script src="app/controllers/FooterControl.js"></script>
 

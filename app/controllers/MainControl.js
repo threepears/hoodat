@@ -1,6 +1,6 @@
 app.controller("MainControl",
-	["$scope", "$firebaseAuth", "Authenticate", "$firebaseArray", "$location", "$rootScope", "FindMusic",
-	 function($scope, $firebaseAuth, Authenticate, $firebaseArray, $location, $rootScope, findmusic) {
+	["$scope", "$firebaseAuth", "Authenticate", "$firebaseArray", "$location", "$rootScope", "FindMusic", "Keys",
+	 function($scope, $firebaseAuth, Authenticate, $firebaseArray, $location, $rootScope, findmusic, keys) {
 
 
 	/* Declare scope variables */
@@ -8,16 +8,6 @@ app.controller("MainControl",
 	$scope.$parent.savedArtist = false;
 
 	console.log("scope", $scope);
-
-
-	/* Generate authorization for Rovi API */
-	var genSig = function() {
-        
-        var curdate = new Date();
-        var gmtstring = curdate.toGMTString();
-        var utc = Date.parse(gmtstring) / 1000;
-        return hex_md5(apikey + secret + utc);
-    }
 
 
     /* Add searched artist to user's account */

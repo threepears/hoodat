@@ -1,4 +1,4 @@
-app.controller("MasterControl", ["$scope", "FindMusic", function($scope, findmusic) {
+app.controller("MasterControl", ["$scope", "$rootScope", "$location", "FindMusic", "Keys", "$anchorScroll", "Authenticate", function($scope, $rootScope, $location, findmusic, keys, $anchorScroll, Authenticate) {
 
 	$scope.home = true;
 	$scope.results = false;
@@ -9,6 +9,24 @@ app.controller("MasterControl", ["$scope", "FindMusic", function($scope, findmus
 	$scope.artistPhoto = "";
 	$scope.artistBio = "";
 	$scope.searchText = "Search For An Artist";
+	var rovi = keys.getRovi;
+	var roviSecret = keys.getRoviSecret;
+
+
+	$(document).ready(function () {
+	    $(".navbar-nav li a").click(function(event) {
+	        $(".navbar-collapse").collapse('hide');
+	    });
+	});
+
+
+	/* Generate authorization for Rovi API */
+	var genSig = function() {
+        var curdate = new Date();
+        var gmtstring = curdate.toGMTString();
+        var utc = Date.parse(gmtstring) / 1000;
+        return hex_md5(rovi + roviSecret + utc);
+    }
 
 
 	/* Reset placeholder text in dropdown search box */
@@ -17,8 +35,12 @@ app.controller("MasterControl", ["$scope", "FindMusic", function($scope, findmus
 	};
 
 
+/*	$scope.gotoAnchor = function(anchor) {
+		$(document).scrollTop( $("#discography").offset().top );  
+	};*/
+
+
 	$scope.closeNav = function() {
-    	console.log("Happy");
     	var navbar_toggle = $(".navbar-toggle");
     	/*$('.navbar-toggle').click();*/
     	/*$('.nav-collapse').dropdown();*/
@@ -129,5 +151,18 @@ app.controller("MasterControl", ["$scope", "FindMusic", function($scope, findmus
 		});*/
 
 	};
+
+
+	/* Log out user */
+	$scope.logout = function() {
+		Authenticate.getFirebase().$unauth();
+	    $scope.authData = null;
+	    $rootScope.loggedIn = false;
+	    $scope.user = {};
+	    console.log("No longer logged in?");
+	    /*$location.path('/main').replace();*/
+	};
+
+
 
 }]);
