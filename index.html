@@ -5,6 +5,7 @@
 	<head>
 
 	  <meta charset="utf-8">
+	  <base href="/">
 	  <title>Hoodat - The Musician Search App</title>
 
 	  <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -42,7 +43,7 @@
 			        <!-- <li ng-show="loggedIn" ng-click="gotoAnchor('discography')"><a href="#">DISCOGRAPHY</a></li>
 			        <li ng-show="loggedIn"><a href="#videos">VIDEOS</a></li> -->
 			        <li ng-hide="loggedIn"><a href="#/login">LOGIN</a></li>
-			        <li ng-show="loggedIn"><a href="#">PAST SEARCHES</a></li>
+			        <li ng-show="loggedIn" ng-click="getPastArtists()"><span class="userOptions">PAST SEARCHES</span></li>
 			        <li ng-show="loggedIn" ng-click="logout()"><a href="#">LOGOUT</a></li>
 			      </ul>
 			    </div>

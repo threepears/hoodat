@@ -113,7 +113,8 @@ hr {
   position: relative;
   top: -1px; }
 
-.userGreeting {
+.userGreeting,
+.userOptions {
   font-family: 'Oswald', sans-serif;
   padding: 15px;
   cursor: default;
@@ -122,11 +123,22 @@ hr {
   text-transform: uppercase;
   background-color: #396a93; }
 
+.userOptions {
+  background-color: #4682B4; }
+
+.userOptions:hover {
+  cursor: pointer;
+  color: #c8daea; }
+
 .artistimage {
   width: 100%; }
 
-#content {
+#content,
+#pastSearchesPage {
   padding: 20px; }
+
+#pastSearchesPage h2 {
+  margin-bottom: 20px; }
 
 .eachAlbum {
   padding-left: 0;
@@ -135,6 +147,28 @@ hr {
 
 .eachAlbum li {
   list-style: none; }
+
+.eachPastArtist {
+  padding: 0; }
+
+.eachPastArtist li {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.4em;
+  list-style-type: none;
+  background-color: #4682B4;
+  border-radius: 10px;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 10px; }
+
+.eachPastArtist li:hover {
+  opacity: 0.7;
+  color: #c8daea;
+  cursor: pointer; }
+
+.eachPastArtist:hover {
+  color: #c8daea; }
 
 #videos {
   background-color: #a3c1dc;

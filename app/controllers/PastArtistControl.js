@@ -1,6 +1,6 @@
 app.controller("PastArtistControl",
-	["$scope", "$firebaseAuth", "Authenticate", "$firebaseArray", "$location", "$rootScope", "MasterControl", "Keys",
-	 function($scope, $firebaseAuth, Authenticate, $firebaseArray, $location, $rootScope, master, keys) {
+	["$scope", "$firebaseAuth", "Authenticate", "$firebaseArray", "$location", "$rootScope", "Keys",
+	 function($scope, $firebaseAuth, Authenticate, $firebaseArray, $location, $rootScope, keys) {
 
 
 	/* Declare scope variables */
@@ -9,10 +9,10 @@ app.controller("PastArtistControl",
 
     /* Research old artist search */
 	$scope.pastArtistSearch = function(artist) {
-		$scope.searchData = artist;
+		$scope.$parent.searchData = artist;
 		console.log(artist);
 
-		master.search();
+		$scope.$parent.search();
 
 		$location.path('/main').replace();
 	};

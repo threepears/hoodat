@@ -59,7 +59,7 @@ app.factory("FindMusic",
       return $q(function(resolve,reject) {
         $http({
           method: 'GET',
-          url: "http://api.rovicorp.com/search/v2.1/music/search?apikey=" + rovi + "&sig=" + signature + "&query=eric+clapton&entitytype=artist&size=1"
+          url: "http://api.rovicorp.com/search/v2.1/music/search?apikey=" + rovi + "&sig=" + signature + "&query=" + artist + "&entitytype=artist&size=1"
         }).then(function (response) {
           console.log(response);
           resolve(response);

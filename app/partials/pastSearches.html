@@ -1,10 +1,9 @@
 <div id="pastSearchesPage">
-	<!-- <img src="logo.jpg"> -->
 	
 	<h2>PAST ARTIST SEARCHES</h2>
 	<!-- List all past searches; click to re-search -->
-	<ul>
-		<li class="pastArtists" ng-repeat="pastArtist in artistList" ng-click="pastArtistSearch(pastArtist)">{{pastArtist}}</li>
+	<ul class="eachPastArtist">
+		<li class="pastArtists" ng-repeat="pastArtist in artistList" ng-click="pastArtistSearch(pastArtist.$value)">{{pastArtist.$value}}</li>
 	</ul>
 
 </div>

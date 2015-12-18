@@ -1,20 +1,24 @@
-app.controller("MasterControl", ["$scope", "$rootScope", "$location", "FindMusic", "Keys", "$anchorScroll", "Authenticate", function($scope, $rootScope, $location, findmusic, keys, $anchorScroll, Authenticate) {
+app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebaseArray", "FindMusic", "Keys", "$anchorScroll", "Authenticate", function($scope, $rootScope, $location, $firebaseArray, findmusic, keys, $anchorScroll, Authenticate) {
 
+
+	/* Assign Master Control variables */
 	$scope.home = true;
 	$scope.results = false;
 	$scope.videoResults = true;
 	$scope.searchInProgress = true;
 	$scope.searchData = "";
 	$scope.artistName = "";
+	$scope.artistList = "";
 	$scope.artistPhoto = "";
 	$scope.artistBio = "";
 	$scope.searchText = "Search For An Artist";
-	var rovi = keys.getRovi;
-	var roviSecret = keys.getRoviSecret;
+	var rovi = keys.getRovi();
+	var roviSecret = keys.getRoviSecret();
 
 
+	/* Collapse mobile nav menu when link clicked */
 	$(document).ready(function () {
-	    $(".navbar-nav li a").click(function(event) {
+	    $(".navbar-nav li").click(function(event) {
 	        $(".navbar-collapse").collapse('hide');
 	    });
 	});
@@ -62,14 +66,11 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "FindMusic
 		$scope.saveArtistButton = "Save This Artist";
 		$scope.savedArtist = false;
 
-/*		console.log($location.path);
+		console.log($location.path);
 
 		$location.path('/main').replace();
 
-		console.log($location.path);*/
-/*		if ($location.path === '/login') {
-			$location.path('/main').replace();
-		}*/
+		console.log($location.path);
 
 		var makeInquiry = findmusic.getMusician(artist);
 		makeInquiry.then(function(response) {
@@ -137,7 +138,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "FindMusic
 		});
 
 
-/*		var signature = genSig();
+		var signature = genSig();
       	console.log(signature);
 
 		var makeInfoInquiry = findmusic.getOtherInfo(artist, signature);
@@ -148,9 +149,23 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "FindMusic
 	
 		}, function(reason) {
 			alert("Failed: " + reason);
-		});*/
+		});
 
 	};
+
+
+	/* Get the list of user's past artist searches */
+	$scope.getPastArtists = function() {
+		console.log("WHAT?");
+		var user = Authenticate.getUid();
+
+		var userRef = new Firebase("https://hoodat.firebaseio.com/users/" + user + "/artists/");
+
+		console.log(userRef);
+		$scope.artistList = $firebaseArray(userRef);
+		console.log($scope.artistList);
+		$location.path('/pastsearches').replace();
+	}
 
 
 	/* Log out user */
