@@ -8,7 +8,9 @@
 	<input class="middle form-control" type="text" id="username" placeholder="Enter A Username" autofocus ng-model="user.username">
 	<input class="middle form-control" type="password" id="password" placeholder="Enter A Password" ng-model="user.password">
 
-    <button type="button" class="btn btn-primary" ng-click="registerUser()">Register</button>
+    <button type="button" id="registerSubmit" class="btn btn-primary btn-lg" ng-click="registerUser()">Register</button>
+
+    <div class="registerError">{{registerError}}</div>
 
 </div>
 

@@ -2,34 +2,47 @@
 <section id="home" ng-show="home">
 	<div id="homePage">
 		<!-- <img src="logo.jpg"> -->
-		<div>
+		<div id="homeContent">
 		
-		<h1>HOODAT</h1>
-		<p id="subtitle">THE MUSICIAN SEARCH APP</p>
+			<h1>HOODAT</h1>
+			<p id="subtitle">THE MUSICIAN SEARCH APP</p>
 
-		<input class="middle form-control" type="text" id="search" placeholder="Search For An Artist" ng-model="$parent.searchData">
+			<input class="middle form-control" type="text" id="search" ng-keypress="returnKey($event)" placeholder="Search For An Artist" ng-model="$parent.searchData">
 
-		<button type="button" class="btn btn-lg btn-danger" ng-click="$parent.search()">Search</button>
-		</div>
+			<button type="button" class="btn btn-lg btn-danger" ng-click="$parent.search()" id="homeSearch">Search</button>
+			
+			<div id="loginOrRegister" ng-bind-html="homeMessage">
+				{{homeMessage}}
+			</div>
 
-		<div id="loginOrRegister">
-			<p>To save your searches, <a href="#/login">login</a> or <a href="#/register">register</a> today!</p>
 		</div>
 
 	</div>
+
+	<div ng-include="'app/partials/footer.html'">
+	</div>
+
 </section>
 
 <section id="results" ng-show="results">
 
 	<img class="artistimage" src="{{artistPhoto}}" />
 
-	<h2 class="artistname">{{artistName}}</h2>
+	<div id="biggerScreens">
 
-	<div id="content">
+		<h2 class="artistname">{{artistName}}</h2>
 
-		<p class="bio">{{artistBio}}</p>
+		<div class="content">
 
-		<button type="button" class="btn" ng-class="{'btn-danger': $parent.savedArtist, 'btn-primary': !$parent.savedArtist}" ng-show="loggedIn" ng-click="saveArtist()">{{saveArtistButton}}</button>
+			<p class="bio">{{artistBio}}</p>
+
+			<button type="button" id="saveArtist" class="btn" ng-class="{'btn-danger': $parent.savedArtist, 'btn-primary': !$parent.savedArtist}" ng-show="loggedIn" ng-click="saveArtist()">{{saveArtistButton}}</button>
+
+		</div>
+
+	</div>
+
+	<div class="content bottomContent">
 
 		<hr />
 
@@ -52,10 +65,7 @@
 		<iframe ng-repeat="video in allVideos" width="100%" height="100%" ng-src="{{getIframeSrc(video.id.videoId)}}" ng-show="videoResults" frameborder="0" allowfullscreen></iframe>
 	</div>
 
+	<div ng-include="'app/partials/footer2.html'">
+	</div>
+
 </section>
-
-<div ng-include="'app/partials/lyricModal.html'">
-</div>
-
-<div ng-include="'app/partials/footer.html'">
-</div>

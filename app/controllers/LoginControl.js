@@ -1,8 +1,14 @@
 app.controller("LoginControl",
-	["$scope", "$http", "$firebaseAuth", "Authenticate", "$firebaseArray", "$location", "$rootScope",
-	 function($scope, $http, $firebaseAuth, Authenticate, $firebaseArray, $location, $rootScope) {
+	["$scope", "$http", "$firebaseAuth", "Authenticate", "$firebaseArray", "$location", "$rootScope", "$sce",
+	 function($scope, $http, $firebaseAuth, Authenticate, $firebaseArray, $location, $rootScope, $sce) {
 
-	 // $scope.username = "";
+
+	$scope.loginKey = function(keyEvent) {
+		console.log("Login People");
+        if (keyEvent.which === 13) {
+        	$scope.loginUser();
+    	}
+    };
 
 
 	$scope.loginUser = function() {
@@ -25,11 +31,15 @@ app.controller("LoginControl",
 	        console.log(userRef);
 
 	        userRef.on("value", function(snapshot) {
-	        	var name = snapshot.val();
-	        	$rootScope.username = name.username;
-	        	console.log(name.username);
-		        $location.path('/main').replace();
-		        $scope.$apply();
+	        	$scope.$apply(function() {
+		        	var name = snapshot.val();
+		        	$rootScope.username = name.username;
+		        	console.log(name.username);
+		        	$scope.$parent.homeMessage = "You are now logged in!";
+	        		$location.path('/main').replace();
+	        	});
+
+/*		        $scope.$apply();*/
 				
 			}, function (errorObject) {
 				console.log("The read failed: " + errorObject.code);
@@ -39,7 +49,8 @@ app.controller("LoginControl",
 
 	        console.log("HELLO?", $scope.message);
 	    }).catch(function(error) {
-	        $scope.loginError = error;
+	        $scope.loginError = error.message;
+	        console.log(error);
 	    });
 
 

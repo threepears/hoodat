@@ -2,12 +2,12 @@
 <div id="loginPage">
 	<!-- <img src="logo.jpg"> -->
 	
-	<h2>PLEASE LOGIN</h2>
+	<h2 ng-bind-html="loginMessage">{{loginMessage}}</h2>
 	<!-- User inputs email/password for login/register -->
 	<input class="middle form-control" type="text" id="email" placeholder="Enter Email" autofocus ng-model="user.email">
-	<input class="middle form-control" type="password" id="password" placeholder="Enter Password" ng-model="user.password">
+	<input class="middle form-control" type="password" id="password" placeholder="Enter Password" ng-keypress="loginKey($event)" ng-model="user.password">
 
-	<button type="button" class="btn btn-danger" ng-click="loginUser()">Login</button>
+	<button type="button" id="loginSubmit" class="btn btn-danger btn-lg" ng-click="loginUser()">Login</button>
 
 	<div class="loginError">{{loginError}}</div>
 

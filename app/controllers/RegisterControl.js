@@ -1,10 +1,15 @@
 app.controller("RegisterControl",
-	["$scope", "$http", "$firebaseAuth", "Authenticate", "$firebaseArray", "$location", "$rootScope",
-	 function($scope, $http, $firebaseAuth, Authenticate, $firebaseArray, $location, $rootScope) {
+	["$scope", "$http", "$firebaseAuth", "Authenticate", "$firebaseArray", "$location", "$rootScope", "$sce",
+	 function($scope, $http, $firebaseAuth, Authenticate, $firebaseArray, $location, $rootScope, $sce) {
 
 
+	/* Declare Controller variables */
+	var newText = "THANKS FOR REGISTERING!<br/><br/>NOW LOGIN...";
 	$scope.user = {};
+	$scope.registerError = "";
 
+
+	/* Register a new user */
 	$scope.registerUser = function() {
 /*		$scope.message = null;
 		$scope.error = null;*/
@@ -23,10 +28,13 @@ app.controller("RegisterControl",
 		  var fun = Authenticate.getUid();
 		  console.log(fun);
 
+		  $scope.$parent.loginMessage = $sce.trustAsHtml(newText);
+
           $location.path('/login').replace();
 		  
 		}).catch(function(error) {
 			console.log(error);
+			$scope.registerError = error.message;
 		});
 	};
 

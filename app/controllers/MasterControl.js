@@ -1,7 +1,11 @@
-app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebaseArray", "FindMusic", "Keys", "$anchorScroll", "Authenticate", function($scope, $rootScope, $location, $firebaseArray, findmusic, keys, $anchorScroll, Authenticate) {
+app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebaseArray", "FindMusic", "Keys", "$anchorScroll", "Authenticate", "$sce", function($scope, $rootScope, $location, $firebaseArray, findmusic, keys, $anchorScroll, Authenticate, $sce) {
 
 
 	/* Assign Master Control variables */
+	var rovi = keys.getRovi();
+	var roviSecret = keys.getRoviSecret();
+	var homeText = "<p>To save your searches, <a href='#/login'>login</a> or <a href='#/register'>register</a> today!</p>"
+	$rootScope.loggedIn = false;
 	$scope.home = true;
 	$scope.results = false;
 	$scope.videoResults = true;
@@ -12,8 +16,29 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	$scope.artistPhoto = "";
 	$scope.artistBio = "";
 	$scope.searchText = "Search For An Artist";
-	var rovi = keys.getRovi();
-	var roviSecret = keys.getRoviSecret();
+	$scope.loginMessage = "PLEASE LOGIN";
+	$scope.homeMessage = $sce.trustAsHtml(homeText);
+	
+
+
+	$scope.returnKey = function(keyEvent) {
+		console.log("Begin");
+        if (keyEvent.which === 13) {
+        	console.log("Inside");
+        	$scope.search();
+    	}
+    };
+
+
+    $scope.navreturnKey = function(keyEvent) {
+		console.log("Begin");
+        if (keyEvent.which === 13) {
+        	console.log("Inside");
+        	$scope.search();
+        	$scope.closeNav();
+    	}
+    };
+
 
 
 	/* Collapse mobile nav menu when link clicked */
@@ -25,12 +50,12 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 
 	/* Generate authorization for Rovi API */
-	var genSig = function() {
+/*	var genSig = function() {
         var curdate = new Date();
         var gmtstring = curdate.toGMTString();
         var utc = Date.parse(gmtstring) / 1000;
         return hex_md5(rovi + roviSecret + utc);
-    }
+    }*/
 
 
 	/* Reset placeholder text in dropdown search box */
@@ -70,6 +95,41 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 		$location.path('/main').replace();
 
+		if ($rootScope.loggedIn === true) {
+			var userUid = Authenticate.getUid();
+			console.log("Got UID");
+
+			var userRef = new Firebase("https://hoodat.firebaseio.com/users/" + userUid + "/artists/");
+
+			var listOfArtists = $firebaseArray(userRef);
+
+			listOfArtists.$loaded()
+			.then(function() {
+				console.log(listOfArtists);
+				console.log(listOfArtists.length);
+				
+				listOfArtists.forEach( function (arrayItem) {
+					var x = arrayItem;
+					console.log(x);
+				})
+			})
+
+
+			/*for (var i = 0; i < 5; i++) {
+				console.log(i);
+				console.log(listOfArtists[i]);
+				console.log(listOfArtists[i].$value);
+				if (listOfArtists[i].$value === artist) {
+
+				}
+			}*/
+
+			/*if (artist === userRef) {
+				$scope.$parent.saveArtistButton = "Artist Saved!"
+				$scope.$parent.savedArtist = true;
+			}*/
+		}
+
 		console.log($location.path);
 
 		var makeInquiry = findmusic.getMusician(artist);
@@ -107,15 +167,6 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 			$scope.allAlbums = response.data.topalbums.album;
 
-			
-/*			console.log(response.data.artist.name);
-			console.log(response.data.artist.image[4]["#text"]);
-
-		    $scope.artistName = response.data.artist.name;
-			$scope.artistPhoto = response.data.artist.image[4]["#text"];*/
-
-	/*		$(".photo > img").attr("src", artistphoto);
-			$(".photo > img").attr("alt", artistname);*/
 		}, function(reason) {
 			alert("Failed: " + reason);
 		});
@@ -138,7 +189,27 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 		});
 
 
-		var signature = genSig();
+		var makeSpotifyInquiry = findmusic.getSpotifyArtist(artist);
+		var makeSpotifyAlbumInquiry = findmusic.getSpotifyAlbums(artistID);
+
+		makeSpotifyInquiry.then(function(response) {
+			makeSpotifyAlbumInquiry(response).then(function(response) {
+
+				console.log(response);
+
+
+			})
+
+
+			}, function(reason) {
+				$scope.error = "Sorry...no albums for this artist!";
+	
+		}, function(reason) {
+			console.log(error);
+		});
+
+
+/*		var signature = genSig();
       	console.log(signature);
 
 		var makeInfoInquiry = findmusic.getOtherInfo(artist, signature);
@@ -149,7 +220,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	
 		}, function(reason) {
 			alert("Failed: " + reason);
-		});
+		});*/
 
 	};
 
@@ -175,6 +246,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	    $rootScope.loggedIn = false;
 	    $scope.user = {};
 	    console.log("No longer logged in?");
+	    $scope.homeMessage = "You are now successfully logged out!";
 	    /*$location.path('/main').replace();*/
 	};
 

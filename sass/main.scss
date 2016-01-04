@@ -1,23 +1,28 @@
 $mainColor: #4682B4;
-$lighterShade: #c8daea;
+$lighterShade: #b5cde3;
 $backgroundAccent: #a3c1dc;
 $darkAccent: #396a93;
 
 html {
 	position: relative;
 	min-height: 100%;
+	background-image: url("http://wallpapercave.com/wp/Fo3Kx0j.jpg");
+	background-repeat: no-repeat;
+	background-position: 75% 0%;
+	background-size: cover;
 }
 
 body {
 	margin: 0 0 76px;
 	padding: 0;
 	border: 0;
-	background-color: $lighterShade;
+	background-color: transparent;
 	transition: 1s;
+	color: #ebebeb;
 }
 
 h1,
-.yipee {
+.branding {
 	color: #fff;
 	font-family: 'Oswald', sans-serif;
 }
@@ -27,7 +32,7 @@ h1 {
 }
 
 h2 {
-	color: $mainColor;
+	color: $lighterShade;
 	font-family: 'Oswald', sans-serif;
 }
 
@@ -40,11 +45,12 @@ h2.artistname {
 }
 
 p {
-	margin: 0 0 20px;
+	margin: 0;
 }
 
 hr {
 	border-top: 1px solid $mainColor;
+	margin-top: 0;
 }
 
 #homePage,
@@ -60,15 +66,19 @@ hr {
 	font-size: 2.5em;
 	line-height: 1.2em;
 	margin-bottom: 30px;
+	color: $lighterShade;
+	width: 256px;
+	margin: 0 auto 40px;
 }
 
 #homePage input,
 #loginPage input,
 #registerPage input {
-	margin: 5% auto;
+	margin: 0 auto 10px;
 	height: auto;
 	font-size: 1.4em;
 	text-align: center;
+	max-width: 500px;
 }
 
 .nav, .pagination, .carousel, .panel-title a { 
@@ -128,7 +138,7 @@ hr {
 	margin-top: 0;
 	margin-bottom: 0;
 	border-top: 0;
-	padding-bottom: 5px;
+	padding: 8px 0 5px 30px;
 	background-color: $darkAccent;
 }
 
@@ -141,6 +151,33 @@ hr {
 .btnSearch {
 	position: relative;
 	top: -1px;
+}
+
+#homeSearch,
+#loginSubmit,
+#registerSubmit {
+	margin: 15px 0;
+}
+
+#homeContent {
+	text-align: center;
+}
+
+#loginOrRegister {
+	width: 150px;
+	margin: 0 auto;
+	color: #fff;
+}
+
+#loginOrRegister a:link,
+#loginOrRegister a:visited {
+	color: $lighterShade;
+}
+
+#loginOrRegister a:hover,
+#loginOrRegister a:active {
+	color: $mainColor;
+	text-decoration: none;
 }
 
 .userGreeting,
@@ -167,9 +204,26 @@ hr {
 	width: 100%;
 }
 
-#content,
+.content {
+	background-color: #000;
+}
+
+.content,
 #pastSearchesPage {
 	padding: 20px;
+}
+
+#saveArtist {
+	margin-top: 20px;
+}
+
+.bottomContent {
+	padding-top: 0;
+}
+
+#pastSearchesPage {
+	width: 320px;
+	margin: 0 auto;
 }
 
 #pastSearchesPage h2 {
@@ -223,6 +277,7 @@ hr {
 
 #videos h2 {
 	margin: 0 0 15px;
+	color: $mainColor;
 }
 
 video.video-stream.html5-main-video {
@@ -231,13 +286,17 @@ video.video-stream.html5-main-video {
 	left: 0;
 }
 
+iframe {
+	margin: 5px auto;
+}
+
 .error {
 	font-weight: bold;
 	font-style: italic;
 }
 
 footer {
-	color: $mainColor;
+	color: $lighterShade;
 	text-align: center;
 	width: 100%;
 	height: 76px;
@@ -247,16 +306,91 @@ footer {
 	font-size: 0.9em;
 }
 
+.searchFooter {
+	background-color: #000;
+}
+
 
 /**********************
 MEDIA QUERIES
 **********************/
 
-@media screen and (min-width: 768px) {
-	.navbar-form {
-		display: none;
+@media screen and (min-width: 480px) {
+	
+	#subtitle,
+	#loginOrRegister {
+		width: 100%;
 	}
 
+	.artistimage {
+		width: 50%;
+		display: inline;
+		padding: 20px 0 20px 20px;
+	}
+
+	#results {
+		background-color: #000;
+	}
+
+	#biggerScreens {
+		width: 50%;
+		float: right;
+	}
+
+	.content {
+		clear: both;
+	}
+
+	h2.artistname {
+		color: $lighterShade;
+		background-color: transparent;
+		padding: 20px 0 0 20px;
+	}	
+
+	hr {
+		margin-top: 5px;
+	}
+
+}
+
+
+@media screen and (min-width: 640px) {
+	
+	#homePage,
+	#loginPage,
+	#registerPage {
+		margin: 100px auto;
+	}
+
+	iframe {
+		width: 32%;
+		margin-right: 2%;
+	}
+
+	iframe:last-child {
+		margin-right: 0;
+	}
+
+}
+
+
+
+@media screen and (min-width: 768px) {
+	
+	.navbar-form {
+		float: left !important;
+		width: 287px;
+		padding: 0 15px;
+		margin-right: 10px;
+	}
+
+	#navigationSearch {
+		margin: 8px 0 7px;
+	}
+
+	.navSearch {
+		width: auto;
+	}
 
 }
 

@@ -1,16 +1,21 @@
 html {
   position: relative;
-  min-height: 100%; }
+  min-height: 100%;
+  background-image: url("http://wallpapercave.com/wp/Fo3Kx0j.jpg");
+  background-repeat: no-repeat;
+  background-position: 75% 0%;
+  background-size: cover; }
 
 body {
   margin: 0 0 76px;
   padding: 0;
   border: 0;
-  background-color: #c8daea;
-  transition: 1s; }
+  background-color: transparent;
+  transition: 1s;
+  color: #ebebeb; }
 
 h1,
-.yipee {
+.branding {
   color: #fff;
   font-family: 'Oswald', sans-serif; }
 
@@ -18,7 +23,7 @@ h1 {
   font-size: 5em; }
 
 h2 {
-  color: #4682B4;
+  color: #b5cde3;
   font-family: 'Oswald', sans-serif; }
 
 h2.artistname {
@@ -29,10 +34,11 @@ h2.artistname {
   line-height: 1.2em; }
 
 p {
-  margin: 0 0 20px; }
+  margin: 0; }
 
 hr {
-  border-top: 1px solid #4682B4; }
+  border-top: 1px solid #4682B4;
+  margin-top: 0; }
 
 #homePage,
 #loginPage,
@@ -45,15 +51,19 @@ hr {
   font-family: 'Oswald', sans-serif;
   font-size: 2.5em;
   line-height: 1.2em;
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+  color: #b5cde3;
+  width: 256px;
+  margin: 0 auto 40px; }
 
 #homePage input,
 #loginPage input,
 #registerPage input {
-  margin: 5% auto;
+  margin: 0 auto 10px;
   height: auto;
   font-size: 1.4em;
-  text-align: center; }
+  text-align: center;
+  max-width: 500px; }
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer; }
@@ -77,7 +87,7 @@ hr {
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:active,
 .navbar-default .navbar-toggle:focus {
-  background-color: #c8daea; }
+  background-color: #b5cde3; }
 
 .navbar-default .navbar-toggle:hover .icon-bar {
   background-color: #4682B4; }
@@ -91,7 +101,7 @@ hr {
 
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:active {
-  color: #c8daea; }
+  color: #b5cde3; }
 
 .navbar-nav {
   margin-top: 0;
@@ -101,7 +111,7 @@ hr {
   margin-top: 0;
   margin-bottom: 0;
   border-top: 0;
-  padding-bottom: 5px;
+  padding: 8px 0 5px 30px;
   background-color: #396a93; }
 
 .navSearch {
@@ -112,6 +122,28 @@ hr {
 .btnSearch {
   position: relative;
   top: -1px; }
+
+#homeSearch,
+#loginSubmit,
+#registerSubmit {
+  margin: 15px 0; }
+
+#homeContent {
+  text-align: center; }
+
+#loginOrRegister {
+  width: 150px;
+  margin: 0 auto;
+  color: #fff; }
+
+#loginOrRegister a:link,
+#loginOrRegister a:visited {
+  color: #b5cde3; }
+
+#loginOrRegister a:hover,
+#loginOrRegister a:active {
+  color: #4682B4;
+  text-decoration: none; }
 
 .userGreeting,
 .userOptions {
@@ -128,14 +160,27 @@ hr {
 
 .userOptions:hover {
   cursor: pointer;
-  color: #c8daea; }
+  color: #b5cde3; }
 
 .artistimage {
   width: 100%; }
 
-#content,
+.content {
+  background-color: #000; }
+
+.content,
 #pastSearchesPage {
   padding: 20px; }
+
+#saveArtist {
+  margin-top: 20px; }
+
+.bottomContent {
+  padding-top: 0; }
+
+#pastSearchesPage {
+  width: 320px;
+  margin: 0 auto; }
 
 #pastSearchesPage h2 {
   margin-bottom: 20px; }
@@ -164,11 +209,11 @@ hr {
 
 .eachPastArtist li:hover {
   opacity: 0.7;
-  color: #c8daea;
+  color: #b5cde3;
   cursor: pointer; }
 
 .eachPastArtist:hover {
-  color: #c8daea; }
+  color: #b5cde3; }
 
 #videos {
   background-color: #a3c1dc;
@@ -178,19 +223,23 @@ hr {
   box-shadow: inset 0 7px 9px -7px rgba(70, 30, 180, 0.4), inset 0 -7px 9px -7px rgba(70, 30, 180, 0.4); }
 
 #videos h2 {
-  margin: 0 0 15px; }
+  margin: 0 0 15px;
+  color: #4682B4; }
 
 video.video-stream.html5-main-video {
   width: 100%;
   height: auto;
   left: 0; }
 
+iframe {
+  margin: 5px auto; }
+
 .error {
   font-weight: bold;
   font-style: italic; }
 
 footer {
-  color: #4682B4;
+  color: #b5cde3;
   text-align: center;
   width: 100%;
   height: 76px;
@@ -199,11 +248,62 @@ footer {
   padding: 20px;
   font-size: 0.9em; }
 
+.searchFooter {
+  background-color: #000; }
+
 /**********************
 MEDIA QUERIES
 **********************/
+@media screen and (min-width: 480px) {
+  #subtitle,
+  #loginOrRegister {
+    width: 100%; }
+
+  .artistimage {
+    width: 50%;
+    display: inline;
+    padding: 20px 0 20px 20px; }
+
+  #results {
+    background-color: #000; }
+
+  #biggerScreens {
+    width: 50%;
+    float: right; }
+
+  .content {
+    clear: both; }
+
+  h2.artistname {
+    color: #b5cde3;
+    background-color: transparent;
+    padding: 20px 0 0 20px; }
+
+  hr {
+    margin-top: 5px; } }
+@media screen and (min-width: 640px) {
+  #homePage,
+  #loginPage,
+  #registerPage {
+    margin: 100px auto; }
+
+  iframe {
+    width: 32%;
+    margin-right: 2%; }
+
+  iframe:last-child {
+    margin-right: 0; } }
 @media screen and (min-width: 768px) {
   .navbar-form {
-    display: none; } }
+    float: left !important;
+    width: 287px;
+    padding: 0 15px;
+    margin-right: 10px; }
+
+  #navigationSearch {
+    margin: 8px 0 7px; }
+
+  .navSearch {
+    width: auto; } }
 
 /*# sourceMappingURL=main.css.map */

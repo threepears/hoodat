@@ -40,7 +40,38 @@ app.factory("FindMusic",
       });
     },
 
-  getVideos: function(artist){
+    getSpotifyArtist: function(artist){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: "https://api.spotify.com/v1/search?q=" + artist + "&type=artist"
+        }).then(function (response) {
+          console.log(response);
+          var artistID = response.data.artists.items[0].id;
+          resolve(artistID);
+        }, function (error) {
+          reject(error);
+        });
+      });
+    },
+
+    getSpotifyAlbums: function(artist){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: "https://api.spotify.com/v1/search?q=" + artist + "&type=artist"
+        }).then(function (response) {
+          console.log(response);
+          var artistID = response.data.artists.items[0].id;
+          console.log(artistID);
+          resolve(response);
+        }, function (error) {
+          reject(error);
+        });
+      });
+    },
+
+    getVideos: function(artist){
       return $q(function(resolve,reject) {
         $http({
           method: 'GET',
