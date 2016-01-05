@@ -47,6 +47,9 @@ hr {
   margin: 25% auto;
   text-align: center; }
 
+#homePage {
+  margin: 15% auto; }
+
 #subtitle {
   font-family: 'Oswald', sans-serif;
   font-size: 2.5em;
@@ -111,7 +114,7 @@ hr {
   margin-top: 0;
   margin-bottom: 0;
   border-top: 0;
-  padding: 8px 0 5px 30px;
+  padding: 8px 0 5px 15px;
   background-color: #396a93; }
 
 .navSearch {
@@ -130,6 +133,13 @@ hr {
 
 #homeContent {
   text-align: center; }
+
+#homeContent > img {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+  position: relative;
+  left: 10px; }
 
 #loginOrRegister {
   width: 150px;
@@ -174,6 +184,10 @@ hr {
 
 #saveArtist {
   margin-top: 20px; }
+
+#saveArtist:hover {
+  background-color: #d9534f;
+  cursor: default; }
 
 .bottomContent {
   padding-top: 0; }
@@ -259,6 +273,9 @@ MEDIA QUERIES
   #loginOrRegister {
     width: 100%; }
 
+  #homePage {
+    margin: 10% auto; }
+
   .artistimage {
     width: 50%;
     display: inline;
@@ -287,12 +304,18 @@ MEDIA QUERIES
   #registerPage {
     margin: 100px auto; }
 
+  #homePage {
+    margin: 50px auto; }
+
   iframe {
     width: 32%;
     margin-right: 2%; }
 
   iframe:last-child {
-    margin-right: 0; } }
+    margin-right: 0; }
+
+  #homeContent > img {
+    width: 80%; } }
 @media screen and (min-width: 768px) {
   .navbar-form {
     float: left !important;
@@ -304,6 +327,12 @@ MEDIA QUERIES
     margin: 8px 0 7px; }
 
   .navSearch {
-    width: auto; } }
+    width: auto; }
+
+  #homeContent > img {
+    width: 70%; } }
+@media screen and (min-width: 900px) {
+  #homeContent > img {
+    width: 60%; } }
 
 /*# sourceMappingURL=main.css.map */

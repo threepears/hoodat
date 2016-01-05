@@ -64,11 +64,6 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	};
 
 
-/*	$scope.gotoAnchor = function(anchor) {
-		$(document).scrollTop( $("#discography").offset().top );  
-	};*/
-
-
 	$scope.closeNav = function() {
     	var navbar_toggle = $(".navbar-toggle");
     	/*$('.navbar-toggle').click();*/
@@ -107,27 +102,27 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			.then(function() {
 				console.log(listOfArtists);
 				console.log(listOfArtists.length);
+				var artistPresent = false;
 				
 				listOfArtists.forEach( function (arrayItem) {
 					var x = arrayItem;
-					console.log(x);
+					console.log(artist.toLowerCase());
+					console.log(x.$value.toLowerCase());
+
+					if (x.$value.toLowerCase() === artist.toLowerCase()) {
+						console.log(x.$value, artist);
+						artistPresent = true;
+					}
 				})
-			})
 
+				console.log(artistPresent);
 
-			/*for (var i = 0; i < 5; i++) {
-				console.log(i);
-				console.log(listOfArtists[i]);
-				console.log(listOfArtists[i].$value);
-				if (listOfArtists[i].$value === artist) {
-
+				if (artistPresent === true) {
+					console.log("IT'S TRUE!!!");
+					$scope.saveArtistButton = "Artist Saved!"
+					$scope.savedArtist = true;
 				}
-			}*/
-
-			/*if (artist === userRef) {
-				$scope.$parent.saveArtistButton = "Artist Saved!"
-				$scope.$parent.savedArtist = true;
-			}*/
+			})
 		}
 
 		console.log($location.path);
@@ -227,6 +222,10 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 	/* Get the list of user's past artist searches */
 	$scope.getPastArtists = function() {
+
+		$scope.saveArtistButton = "";
+		$scope.savedArtist = false;
+
 		console.log("WHAT?");
 		var user = Authenticate.getUid();
 

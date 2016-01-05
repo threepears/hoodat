@@ -4,8 +4,8 @@ app.controller("MainControl",
 
 
 	/* Declare scope variables */
-	$scope.$parent.saveArtistButton = "Save This Artist";
-	$scope.$parent.savedArtist = false;
+/*	$scope.$parent.saveArtistButton = "Save This Artist";
+	$scope.$parent.savedArtist = false;*/
 
 	console.log("scope", $scope);
 

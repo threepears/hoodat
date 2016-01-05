@@ -14,7 +14,7 @@ app.controller("PastArtistControl",
 
 		$scope.$parent.search();
 
-		$location.path('/main').replace();
+		/*$location.path('/main').replace();*/
 	};
 
 
