@@ -1,16 +1,16 @@
 
 <section id="home" ng-show="home">
 	<div id="homePage">
-		<!-- <img src="logo.jpg"> -->
+
 		<div id="homeContent">
-		
+
 			<img src="./images/hoodat_logo_white.png" alt="Hoodat Logo">
 			<p id="subtitle">THE MUSICIAN SEARCH APP</p>
 
 			<input class="middle form-control" type="text" id="search" ng-keypress="returnKey($event)" placeholder="Search For An Artist" ng-model="$parent.searchData">
 
 			<button type="button" class="btn btn-lg btn-danger" ng-click="$parent.search()" id="homeSearch">Search</button>
-			
+
 			<div id="loginOrRegister" ng-bind-html="homeMessage">
 				{{homeMessage}}
 			</div>
@@ -51,7 +51,7 @@
 			<h2>DISCOGRAPHY</h2>
 			<div class="albumResults">
 				<ul class="eachAlbum">
-					<li ng-repeat="album in allAlbums">{{album.name}}</li>
+					<li ng-repeat="album in filteredAlbums | unique:'name' | orderBy:'year'">{{album.year | truncate: 4}} - {{album.title}}</li>
 				</ul>
 			</div>
 		</div>

@@ -18,7 +18,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	$scope.searchText = "Search For An Artist";
 	$scope.loginMessage = "PLEASE LOGIN";
 	$scope.homeMessage = $sce.trustAsHtml(homeText);
-	
+
 
 
 	$scope.returnKey = function(keyEvent) {
@@ -50,12 +50,12 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 
 	/* Generate authorization for Rovi API */
-/*	var genSig = function() {
-        var curdate = new Date();
-        var gmtstring = curdate.toGMTString();
-        var utc = Date.parse(gmtstring) / 1000;
-        return hex_md5(rovi + roviSecret + utc);
-    }*/
+	var genSig = function() {
+    var curdate = new Date();
+    var gmtstring = curdate.toGMTString();
+    var utc = Date.parse(gmtstring) / 1000;
+    return hex_md5(rovi + roviSecret + utc);
+   }
 
 
 	/* Reset placeholder text in dropdown search box */
@@ -103,7 +103,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 				console.log(listOfArtists);
 				console.log(listOfArtists.length);
 				var artistPresent = false;
-				
+
 				listOfArtists.forEach( function (arrayItem) {
 					var x = arrayItem;
 					console.log(artist.toLowerCase());
@@ -131,21 +131,21 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 		makeInquiry.then(function(response) {
 
 			console.log(response);
-			
+
 			console.log(response.data.artist.name);
 			console.log(response.data.artist.image[4]["#text"]);
 
-		    $scope.artistName = response.data.artist.name;
-			$scope.artistPhoto = response.data.artist.image[4]["#text"];
+		  $scope.artistName = response.data.artist.name;
+			// $scope.artistPhoto = response.data.artist.image[4]["#text"];
 
-			var artistbio = response.data.artist.bio.summary;
-			var longartistbio = response.data.artist.bio.content;
+			// var artistbio = response.data.artist.bio.summary;
+			// var longartistbio = response.data.artist.bio.content;
 
-			var end = artistbio.indexOf("<a href");
+			// var end = artistbio.indexOf("<a href");
 
-			var end2 = artistbio.indexOf("Read more on");
+			// var end2 = artistbio.indexOf("Read more on");
 
-			$scope.artistBio = artistbio.slice(0, end);
+			// $scope.artistBio = artistbio.slice(0, end);
 
 			$scope.home = false;
 			$scope.results = true;
@@ -177,7 +177,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			$scope.getIframeSrc = function (videoId) {
 			  return 'https://www.youtube.com/embed/' + videoId;
 			};
-	
+
 		}, function(reason) {
 			$scope.videoResults = false;
 			$scope.error = "Sorry...no videos for this artist!";
@@ -185,37 +185,87 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 
 		var makeSpotifyInquiry = findmusic.getSpotifyArtist(artist);
-		var makeSpotifyAlbumInquiry = findmusic.getSpotifyAlbums(artistID);
 
 		makeSpotifyInquiry.then(function(response) {
-			makeSpotifyAlbumInquiry(response).then(function(response) {
+			findmusic.getSpotifyAlbums(response).then(function(response) {
+
+				$scope.artistAlbums = response.data.items;
 
 				console.log(response);
 
-
 			})
-
 
 			}, function(reason) {
 				$scope.error = "Sorry...no albums for this artist!";
-	
+
 		}, function(reason) {
 			console.log(error);
 		});
 
 
-/*		var signature = genSig();
-      	console.log(signature);
+		var signature = genSig();
 
 		var makeInfoInquiry = findmusic.getOtherInfo(artist, signature);
+
 		makeInfoInquiry.then(function(response) {
 
 			console.log(response);
 
-	
+			// Get artist biography
+			var musicBio = response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].overview;
+
+			musicBio = musicBio.replace('[/roviLink]', '"');
+
+			var beginLink = musicBio.indexOf('[');
+			var endLink = musicBio.indexOf('"]');
+			var removeLink = musicBio.slice(beginLink, endLink + 2);
+
+			musicBio = musicBio.replace(removeLink, '"');
+
+			var removeEnd = musicBio.indexOf(" ~ ");
+
+			musicBio = musicBio.slice(0, removeEnd);
+
+			if (musicBio.charAt(0) === '"') {
+				musicBio = musicBio.slice(1);
+			}
+
+			if (musicBio.charAt(musicBio.length-1) !== '.') {
+				musicBio = musicBio + ".";
+			}
+
+			$scope.artistBio = musicBio;
+
+
+			// Get artist photo
+			$scope.artistPhoto = response.data.searchResponse.results[0].name.images[0].url;
+
+
+			// Get artist albums
+			var albumList = response.data.searchResponse.results[0].name.discography;
+			$scope.filteredAlbums = [];
+
+			for (var i = 0; i < albumList.length; i++) {
+
+				if (albumList[i].flags !== null) {
+					var counter = 0;
+					albumList[i].flags.forEach(flag => {
+						if (flag === "Compilation" || flag === "Live Recording" || flag === "Video" || flag === "Bootleg" || flag === "Studio & Live") {
+							counter++;
+						}
+					});
+
+					if (counter === 0 && albumList[i].type === "Album") {
+						$scope.filteredAlbums.push(albumList[i]);
+					}
+				}
+			}
+
+			console.log($scope.filteredAlbums);
+
 		}, function(reason) {
 			alert("Failed: " + reason);
-		});*/
+		});
 
 	};
 

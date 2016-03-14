@@ -1,13 +1,10 @@
-app.factory("FindMusic", 
+app.factory("FindMusic",
 	["$http", "$q", "Keys", function($http, $q, keys) {
 
 
   var lastfm = keys.getLastFM();
-  console.log(lastfm);
   var youtube = keys.getYouTube();
-  console.log(youtube);
   var rovi = keys.getRovi();
-  console.log(rovi);
 
 
 	return {
@@ -30,7 +27,7 @@ app.factory("FindMusic",
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: "http://ws.audioscrobbler.com/2.0/?method=artist.getTopAlbums&artist=" + artist + "&api_key=" + lastfm + "&format=json"
+          url: "http://ws.audioscrobbler.com/2.0/?method=artist.getTopAlbums&limit=20&artist=" + artist + "&api_key=" + lastfm + "&format=json"
         }).then(function (response) {
           console.log(response);
           resolve(response);
@@ -55,15 +52,15 @@ app.factory("FindMusic",
       });
     },
 
-    getSpotifyAlbums: function(artist){
+    getSpotifyAlbums: function(artistID){
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: "https://api.spotify.com/v1/search?q=" + artist + "&type=artist"
+          url: "https://api.spotify.com/v1/artists/" + artistID + "/albums"
         }).then(function (response) {
           console.log(response);
-          var artistID = response.data.artists.items[0].id;
-          console.log(artistID);
+    /*      var artistID = response.data.artists.items[0].id;
+          console.log(artistID);*/
           resolve(response);
         }, function (error) {
           reject(error);
@@ -90,7 +87,8 @@ app.factory("FindMusic",
       return $q(function(resolve,reject) {
         $http({
           method: 'GET',
-          url: "http://api.rovicorp.com/search/v2.1/music/search?apikey=" + rovi + "&sig=" + signature + "&query=" + artist + "&entitytype=artist&size=1"
+          url: "http://cors-request-server.herokuapp.com/api/" + artist + "/" + signature
+          // url: "http://api.rovicorp.com/search/v2.1/music/search?apikey=" + rovi + "&sig=" + signature + "&query=" + artist + "&entitytype=artist&size=1"
         }).then(function (response) {
           console.log(response);
           resolve(response);
@@ -99,7 +97,7 @@ app.factory("FindMusic",
         });
       });
     }
-    
+
   }
 
 }]);
