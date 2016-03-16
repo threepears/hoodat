@@ -4,7 +4,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	/* Assign Master Control variables */
 	var rovi = keys.getRovi();
 	var roviSecret = keys.getRoviSecret();
-	var homeText = "<p>To save your searches, <a href='#/login'>login</a> or <a href='#/register'>register</a> today!</p>"
+	var homeText = "<p>To save your searches, <a href='#/login'>login</a> or <a href='#/register'>register</a> today!</p>";
 	$rootScope.loggedIn = false;
 	$scope.home = true;
 	$scope.results = false;
@@ -174,14 +174,16 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 			$scope.allVideos = response.data.items;
 
-			$scope.getIframeSrc = function (videoId) {
-			  return 'https://www.youtube.com/embed/' + videoId;
-			};
+			// $scope.getIframeSrc = function (videoId) {
+			//   return 'https://www.youtube.com/embed/' + videoId;
+			// };
 
 		}, function(reason) {
 			$scope.videoResults = false;
 			$scope.error = "Sorry...no videos for this artist!";
 		});
+
+
 
 
 		var makeSpotifyInquiry = findmusic.getSpotifyArtist(artist);
@@ -250,7 +252,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 				if (albumList[i].flags !== null) {
 					var counter = 0;
 					albumList[i].flags.forEach(flag => {
-						if (flag === "Compilation" || flag === "Live Recording" || flag === "Video" || flag === "Bootleg" || flag === "Studio & Live") {
+						if (flag === "Compilation" || flag === "Interview" || flag === "Live Recording" || flag === "Video" || flag === "Bootleg" || flag === "Studio & Live") {
 							counter++;
 						}
 					});
@@ -262,6 +264,56 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			}
 
 			console.log($scope.filteredAlbums);
+
+
+			// Get artist videos from Rovi
+			// var videoLink = response.data.searchResponse.results[0].name.videosUri;
+			// console.log(videoLink);
+			// var position = videoLink.indexOf("&nameid=");
+			// videoLink = videoLink.slice(position + 8);
+			// console.log(videoLink);
+
+			var returnVideos = findmusic.getEchonestVideos(artist);
+			returnVideos.then(function(response) {
+				console.log(response);
+				console.log(response.data.response.video);
+
+				var videoLinks = response.data.response.video;
+				var videoIds = [];
+
+				for (var i = 0; i < videoLinks.length; i++) {
+					console.log(videoLinks[i].site);
+					if (videoLinks[i].site === "dailymotion.com") {
+
+						var count = videoLinks[i].url.indexOf('/video/');
+						var id = videoLinks[i].url.slice(count + 7, count + 14);
+						videoIds.push(id);
+
+					} else if (videoLinks[i].site === "youtube.com") {
+
+						var count = videoLinks[i].url.indexOf('watch?v=');
+						var id = videoLinks[i].url.slice(count + 8, count + 19);
+						videoIds.push(id);
+
+					}
+
+					$scope.allVideos = videoIds;
+
+					$scope.getIframeSrc = function (videoId) {
+						if (videoId.length === 7) {
+						  return '//www.dailymotion.com/embed/video/' + videoId;
+						} else {
+							return 'https://www.youtube.com/embed/' + videoId;
+						}
+					};
+				}
+			//$( ".frames" ).wrap( "<div class='new'></div>" );
+
+			}, function(reason) {
+				$scope.videoResults = false;
+				$scope.error = "Sorry...no videos for this artist!";
+			});
+
 
 		}, function(reason) {
 			alert("Failed: " + reason);

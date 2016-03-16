@@ -96,6 +96,21 @@ app.factory("FindMusic",
           reject(error);
         });
       });
+    },
+
+    getEchonestVideos: function(artist) {
+      return $q(function(resolve,reject) {
+        $http({
+          method: 'GET',
+          url: "http://cors-request-server.herokuapp.com/videos/" + artist
+        }).then(function (response) {
+          console.log(response);
+          resolve(response);
+        }, function (error) {
+          reject(error);
+          console.log(error);
+        });
+      });
     }
 
   }

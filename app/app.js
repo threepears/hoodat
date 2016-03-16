@@ -1,9 +1,9 @@
 var app = angular.module("HoodatApp", ["ngRoute", "firebase", "angular.filter"]).config(function($sceDelegateProvider) {
       $sceDelegateProvider.resourceUrlWhitelist([
         'self',
-        'https://www.youtube.com/**']);
+        'https://www.youtube.com/**',
+        'http://www.dailymotion.com/embed/video/**']);
 });
-
 
 
 
