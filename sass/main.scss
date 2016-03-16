@@ -85,8 +85,8 @@ hr {
 	max-width: 500px;
 }
 
-.nav, .pagination, .carousel, .panel-title a { 
-	cursor: pointer; 
+.nav, .pagination, .carousel, .panel-title a {
+	cursor: pointer;
 }
 
 .navbar-default {
@@ -285,7 +285,7 @@ hr {
 
 #videos {
 	background-color: $backgroundAccent;
-	padding: 20px;
+	padding: 20px 20px 5px;
 }
 
 .boxShadow {
@@ -303,13 +303,31 @@ video.video-stream.html5-main-video {
 	left: 0;
 }
 
+.frameContainer {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.frameContainer:before {
+	content: "";
+	display: block;
+	padding-top: 70%;
+}
+
 iframe {
 	margin: 5px auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 }
 
 .error {
 	font-weight: bold;
 	font-style: italic;
+	color: #000;
+	margin-bottom: 10px;
 }
 
 footer {
@@ -333,7 +351,7 @@ MEDIA QUERIES
 **********************/
 
 @media screen and (min-width: 480px) {
-	
+
 	#subtitle,
 	#loginOrRegister {
 		width: 100%;
@@ -366,7 +384,7 @@ MEDIA QUERIES
 		color: $lighterShade;
 		background-color: transparent;
 		padding: 20px 0 0 20px;
-	}	
+	}
 
 	hr {
 		margin-top: 5px;
@@ -376,7 +394,7 @@ MEDIA QUERIES
 
 
 @media screen and (min-width: 640px) {
-	
+
 	#homePage,
 	#loginPage,
 	#registerPage {
@@ -405,7 +423,7 @@ MEDIA QUERIES
 
 
 @media screen and (min-width: 768px) {
-	
+
 	.navbar-form {
 		float: left !important;
 		width: 287px;

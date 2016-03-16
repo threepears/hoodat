@@ -231,7 +231,7 @@ hr {
 
 #videos {
   background-color: #a3c1dc;
-  padding: 20px; }
+  padding: 20px 20px 5px; }
 
 .boxShadow {
   box-shadow: inset 0 7px 9px -7px rgba(70, 30, 180, 0.4), inset 0 -7px 9px -7px rgba(70, 30, 180, 0.4); }
@@ -245,12 +245,28 @@ video.video-stream.html5-main-video {
   height: auto;
   left: 0; }
 
+.frameContainer {
+  position: relative;
+  margin-bottom: 20px; }
+
+.frameContainer:before {
+  content: "";
+  display: block;
+  padding-top: 70%; }
+
 iframe {
-  margin: 5px auto; }
+  margin: 5px auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
 
 .error {
   font-weight: bold;
-  font-style: italic; }
+  font-style: italic;
+  color: #000;
+  margin-bottom: 10px; }
 
 footer {
   color: #b5cde3;

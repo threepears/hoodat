@@ -5,7 +5,13 @@ var app = angular.module("HoodatApp", ["ngRoute", "firebase", "angular.filter"])
         'http://www.dailymotion.com/embed/video/**']);
 });
 
-
+app.directive('emitLastRepeaterElement', function() {
+  return function(scope) {
+    if (scope.$last){
+    scope.$emit('LastRepeaterElement');
+    }
+  };
+});
 
 app.config(['$routeProvider',
   function($routeProvider) {

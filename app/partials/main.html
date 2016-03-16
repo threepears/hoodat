@@ -57,12 +57,12 @@
 		</div>
 
 	</div>
-	<!--ng-src="{{getIframeSrc(video.id.videoId)}}"-->
+	<!--ng-src="{{getIframeSrc(video)}}"-->
 	<div id="videos" class="boxShadow">
 		<a name="videos"></a>
 		<h2>VIDEOS</h2>
 		<div class="error">{{error}}</div>
-			<iframe ng-repeat="video in allVideos" width="100%" height="100%" ng-src="{{getIframeSrc(video)}}" ng-show="videoResults" frameborder="0" class="frames" allowfullscreen></iframe>
+			<iframe ng-repeat="video in allVideos" width="100%" height="100%" ng-src="{{getIframeSrc(video.id.videoId)}}" ng-show="videoResults" frameborder="0" class="frames" emit-last-repeater-element allowfullscreen></iframe>
 	</div>
 
 	<div ng-include="'app/partials/footer2.html'">

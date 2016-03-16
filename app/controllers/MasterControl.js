@@ -20,6 +20,10 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	$scope.homeMessage = $sce.trustAsHtml(homeText);
 
 
+	$scope.$on('LastRepeaterElement', function() {
+    $( ".frames" ).wrap( "<div class='frameContainer'></div>" );
+	});
+
 
 	$scope.returnKey = function(keyEvent) {
 		console.log("Begin");
@@ -46,6 +50,11 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	    $(".navbar-nav li").click(function(event) {
 	        $(".navbar-collapse").collapse('hide');
 	    });
+	});
+
+
+	$(window).bind("load", function() {
+
 	});
 
 
@@ -170,17 +179,21 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 		var makeVideoInquiry = findmusic.getVideos(artist);
 		makeVideoInquiry.then(function(response) {
 
+			$scope.allVideos = response.data.items;
 			console.log(response.data.items);
 
-			$scope.allVideos = response.data.items;
+			if (response.data.items.length === 0) {
+				$scope.videoResults = false;
+				$scope.error = "Sorry...no videos for this artist!";
+			}
 
-			// $scope.getIframeSrc = function (videoId) {
-			//   return 'https://www.youtube.com/embed/' + videoId;
-			// };
+			$scope.getIframeSrc = function (videoId) {
+			  return 'https://www.youtube.com/embed/' + videoId;
+			};
 
 		}, function(reason) {
 			$scope.videoResults = false;
-			$scope.error = "Sorry...no videos for this artist!";
+			$scope.error = "Sorry ... no videos for this artist!";
 		});
 
 
@@ -216,13 +229,23 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			// Get artist biography
 			var musicBio = response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].overview;
 
-			musicBio = musicBio.replace('[/roviLink]', '"');
+			musicBio = musicBio.split('[/roviLink]').join('');
+			musicBio = musicBio.split('[roviLink="MA"]').join('');
+			musicBio = musicBio.split('[roviLink="MN"]').join('');
 
-			var beginLink = musicBio.indexOf('[');
-			var endLink = musicBio.indexOf('"]');
-			var removeLink = musicBio.slice(beginLink, endLink + 2);
 
-			musicBio = musicBio.replace(removeLink, '"');
+			for (var i = 0; i < musicBio.length; i++) {
+				if (musicBio[i] === "[") {
+					var beginLink = musicBio.slice(i, i + 25);
+					musicBio = musicBio.split(beginLink).join('');
+				}
+			}
+
+			// var beginLink = musicBio.indexOf('[');
+			// var endLink = musicBio.indexOf('"]');
+			// var removeLink = musicBio.slice(beginLink, endLink + 2);
+
+			// musicBio = musicBio.replace(removeLink, '"');
 
 			var removeEnd = musicBio.indexOf(" ~ ");
 
@@ -266,53 +289,56 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			console.log($scope.filteredAlbums);
 
 
-			// Get artist videos from Rovi
+			// VIDEO REQUEST TO ROVI
 			// var videoLink = response.data.searchResponse.results[0].name.videosUri;
 			// console.log(videoLink);
 			// var position = videoLink.indexOf("&nameid=");
 			// videoLink = videoLink.slice(position + 8);
 			// console.log(videoLink);
 
-			var returnVideos = findmusic.getEchonestVideos(artist);
-			returnVideos.then(function(response) {
-				console.log(response);
-				console.log(response.data.response.video);
+			// var returnVideos = findmusic.getEchonestVideos(artist);
+			// returnVideos.then(function(response) {
+			// 	console.log(response);
+			// 	console.log(response.data.response.video);
 
-				var videoLinks = response.data.response.video;
-				var videoIds = [];
+			// 	var videoLinks = response.data.response.video;
+			// 	var videoIds = [];
 
-				for (var i = 0; i < videoLinks.length; i++) {
-					console.log(videoLinks[i].site);
-					if (videoLinks[i].site === "dailymotion.com") {
+			// 	for (var i = 0; i < videoLinks.length; i++) {
+			// 		console.log(videoLinks[i].site);
+			// 		if (videoLinks[i].site === "dailymotion.com") {
 
-						var count = videoLinks[i].url.indexOf('/video/');
-						var id = videoLinks[i].url.slice(count + 7, count + 14);
-						videoIds.push(id);
 
-					} else if (videoLinks[i].site === "youtube.com") {
+			// VIDEO REQUEST TO ECHONEST
+			// 			var count = videoLinks[i].url.indexOf('/video/');
+			// 			var id = videoLinks[i].url.slice(count + 7, count + 14);
+			// 			videoIds.push(id);
 
-						var count = videoLinks[i].url.indexOf('watch?v=');
-						var id = videoLinks[i].url.slice(count + 8, count + 19);
-						videoIds.push(id);
+			// 		} else if (videoLinks[i].site === "youtube.com") {
 
-					}
+			// 			var count = videoLinks[i].url.indexOf('watch?v=');
+			// 			var id = videoLinks[i].url.slice(count + 8, count + 19);
+			// 			videoIds.push(id);
 
-					$scope.allVideos = videoIds;
+			// 		}
 
-					$scope.getIframeSrc = function (videoId) {
-						if (videoId.length === 7) {
-						  return '//www.dailymotion.com/embed/video/' + videoId;
-						} else {
-							return 'https://www.youtube.com/embed/' + videoId;
-						}
-					};
-				}
-			//$( ".frames" ).wrap( "<div class='new'></div>" );
+			// 		$scope.allVideos = videoIds;
 
-			}, function(reason) {
-				$scope.videoResults = false;
-				$scope.error = "Sorry...no videos for this artist!";
-			});
+			// 		$scope.getIframeSrc = function (videoId) {
+			// 			if (videoId.length === 7) {
+			// 			  return '//www.dailymotion.com/embed/video/' + videoId;
+			// 			} else {
+			// 				return 'https://www.youtube.com/embed/' + videoId;
+			// 			}
+			// 			// $( ".frames" ).wrap( "<div class='new'></div>" );
+			// 		};
+			// 	}
+			// $( ".frames" ).wrap( "<div class='new'></div>" );
+
+			// }, function(reason) {
+			// 	$scope.videoResults = false;
+			// 	$scope.error = "Sorry...no videos for this artist!";
+			// });
 
 
 		}, function(reason) {
