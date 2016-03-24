@@ -34,15 +34,14 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
     };
 
 
-    $scope.navreturnKey = function(keyEvent) {
-		console.log("Begin");
-        if (keyEvent.which === 13) {
-        	console.log("Inside");
-        	$scope.search();
-        	$scope.closeNav();
-    	}
-    };
-
+  $scope.navreturnKey = function(keyEvent) {
+	console.log("Begin");
+      if (keyEvent.which === 13) {
+      	console.log("Inside");
+      	$scope.search();
+      	$scope.closeNav();
+  	}
+  };
 
 
 	/* Collapse mobile nav menu when link clicked */
@@ -50,11 +49,6 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	    $(".navbar-nav li").click(function(event) {
 	        $(".navbar-collapse").collapse('hide');
 	    });
-	});
-
-
-	$(window).bind("load", function() {
-
 	});
 
 
@@ -74,18 +68,15 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 
 	$scope.closeNav = function() {
-    	var navbar_toggle = $(".navbar-toggle");
-    	/*$('.navbar-toggle').click();*/
-    	/*$('.nav-collapse').dropdown();*/
-    	/*angular.element('.navbar-toggle').hide();*/
-    	/*$('.navbar-collapse').collapse('hide');*/
-    	if ($('.navbar-collapse').is(':visible')) {
-    		navbar_toggle.trigger('click');
-    	}
-    };
+  	var navbar_toggle = $(".navbar-toggle");
+
+  	if ($('.navbar-collapse').is(':visible')) {
+  		navbar_toggle.trigger('click');
+  	}
+  };
 
 
-    /* Perform artist searches: bio, discography, and videos */
+  /* Perform artist searches: bio, discography, and videos */
 	$scope.search = function() {
 
 		var artist = $scope.searchData;
@@ -145,16 +136,6 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			console.log(response.data.artist.image[4]["#text"]);
 
 		  $scope.artistName = response.data.artist.name;
-			// $scope.artistPhoto = response.data.artist.image[4]["#text"];
-
-			// var artistbio = response.data.artist.bio.summary;
-			// var longartistbio = response.data.artist.bio.content;
-
-			// var end = artistbio.indexOf("<a href");
-
-			// var end2 = artistbio.indexOf("Read more on");
-
-			// $scope.artistBio = artistbio.slice(0, end);
 
 			$scope.home = false;
 			$scope.results = true;
@@ -176,6 +157,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 		});
 
 
+		// GET MUSICIAN VIDEOS FROM YOUTUBE
 		var makeVideoInquiry = findmusic.getVideos(artist);
 		makeVideoInquiry.then(function(response) {
 
@@ -197,34 +179,12 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 		});
 
 
-
-
-		var makeSpotifyInquiry = findmusic.getSpotifyArtist(artist);
-
-		makeSpotifyInquiry.then(function(response) {
-			findmusic.getSpotifyAlbums(response).then(function(response) {
-
-				$scope.artistAlbums = response.data.items;
-
-				console.log(response);
-
-			})
-
-			}, function(reason) {
-				$scope.error = "Sorry...no albums for this artist!";
-
-		}, function(reason) {
-			console.log(error);
-		});
-
-
+		// GET MUSICIAN BIO, ALBUMS, AND DISCOGRAPHY FROM ROVI API
 		var signature = genSig();
 
 		var makeInfoInquiry = findmusic.getOtherInfo(artist, signature);
 
 		makeInfoInquiry.then(function(response) {
-
-			console.log(response);
 
 			// Get artist biography
 			var musicBio = response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].overview;
@@ -241,11 +201,6 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 				}
 			}
 
-			// var beginLink = musicBio.indexOf('[');
-			// var endLink = musicBio.indexOf('"]');
-			// var removeLink = musicBio.slice(beginLink, endLink + 2);
-
-			// musicBio = musicBio.replace(removeLink, '"');
 
 			var removeEnd = musicBio.indexOf(" ~ ");
 
@@ -286,61 +241,6 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 				}
 			}
 
-			console.log($scope.filteredAlbums);
-
-
-			// VIDEO REQUEST TO ROVI
-			// var videoLink = response.data.searchResponse.results[0].name.videosUri;
-			// console.log(videoLink);
-			// var position = videoLink.indexOf("&nameid=");
-			// videoLink = videoLink.slice(position + 8);
-			// console.log(videoLink);
-
-			// var returnVideos = findmusic.getEchonestVideos(artist);
-			// returnVideos.then(function(response) {
-			// 	console.log(response);
-			// 	console.log(response.data.response.video);
-
-			// 	var videoLinks = response.data.response.video;
-			// 	var videoIds = [];
-
-			// 	for (var i = 0; i < videoLinks.length; i++) {
-			// 		console.log(videoLinks[i].site);
-			// 		if (videoLinks[i].site === "dailymotion.com") {
-
-
-			// VIDEO REQUEST TO ECHONEST
-			// 			var count = videoLinks[i].url.indexOf('/video/');
-			// 			var id = videoLinks[i].url.slice(count + 7, count + 14);
-			// 			videoIds.push(id);
-
-			// 		} else if (videoLinks[i].site === "youtube.com") {
-
-			// 			var count = videoLinks[i].url.indexOf('watch?v=');
-			// 			var id = videoLinks[i].url.slice(count + 8, count + 19);
-			// 			videoIds.push(id);
-
-			// 		}
-
-			// 		$scope.allVideos = videoIds;
-
-			// 		$scope.getIframeSrc = function (videoId) {
-			// 			if (videoId.length === 7) {
-			// 			  return '//www.dailymotion.com/embed/video/' + videoId;
-			// 			} else {
-			// 				return 'https://www.youtube.com/embed/' + videoId;
-			// 			}
-			// 			// $( ".frames" ).wrap( "<div class='new'></div>" );
-			// 		};
-			// 	}
-			// $( ".frames" ).wrap( "<div class='new'></div>" );
-
-			// }, function(reason) {
-			// 	$scope.videoResults = false;
-			// 	$scope.error = "Sorry...no videos for this artist!";
-			// });
-
-
 		}, function(reason) {
 			alert("Failed: " + reason);
 		});
@@ -374,9 +274,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	    $scope.user = {};
 	    console.log("No longer logged in?");
 	    $scope.homeMessage = "You are now successfully logged out!";
-	    /*$location.path('/main').replace();*/
 	};
-
 
 
 }]);
