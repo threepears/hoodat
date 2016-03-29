@@ -22,6 +22,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 	$scope.$on('LastRepeaterElement', function() {
     $( ".frames" ).wrap( "<div class='frameContainer'></div>" );
+    $('.frameContainer:not(:has(.frames))').css('display', 'none');
 	});
 
 
@@ -125,7 +126,6 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			})
 		}
 
-		console.log($location.path);
 
 		var makeInquiry = findmusic.getMusician(artist);
 		makeInquiry.then(function(response) {
@@ -160,7 +160,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 		// GET MUSICIAN VIDEOS FROM YOUTUBE
 		var makeVideoInquiry = findmusic.getVideos(artist);
 		makeVideoInquiry.then(function(response) {
-
+			console.log(response);
 			$scope.allVideos = response.data.items;
 			console.log(response.data.items);
 

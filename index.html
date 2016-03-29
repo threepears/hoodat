@@ -42,6 +42,7 @@
 			      	<li ng-show="loggedIn"><span class="userGreeting">WELCOME, {{username}}!</span></li>
 			        <!-- <li ng-show="loggedIn" ng-click="gotoAnchor('discography')"><a href="#">DISCOGRAPHY</a></li>
 			        <li ng-show="loggedIn"><a href="#videos">VIDEOS</a></li> -->
+			        <li ng-hide="loggedIn"><a href="#/register">REGISTER</a></li>
 			        <li ng-hide="loggedIn"><a href="#/login">LOGIN</a></li>
 			        <li ng-show="loggedIn" ng-click="getPastArtists()"><span class="userOptions">PAST SEARCHES</span></li>
 			        <li ng-show="loggedIn" ng-click="logout()"><a href="#">LOGOUT</a></li>
@@ -53,7 +54,7 @@
 
 			<section ng-view id="container">
 
-			</section> 
+			</section>
 
 		</div>
 
@@ -69,7 +70,7 @@
 	  	<!-- FIREBASE SCRIPTS -->
 	  	<script src="lib/bower_components/firebase/firebase.js"></script>
 	  	<script src="lib/bower_components/angularfire/dist/angularfire.min.js"></script>
-	  	
+
 
 	  	<script src="app/app.js"></script>
 	  	<script src="app/md5_2.js"></script>

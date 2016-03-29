@@ -405,14 +405,7 @@ MEDIA QUERIES
 		margin: 50px auto;
 	}
 
-	iframe {
-		width: 32%;
-		margin-right: 2%;
-	}
 
-	iframe:last-child {
-		margin-right: 0;
-	}
 
 	#homeContent > img {
 		width: 80%;
@@ -437,6 +430,12 @@ MEDIA QUERIES
 
 	.navSearch {
 		width: auto;
+	}
+
+	.frameContainer {
+		width: 30%;
+		margin: 0 1.6% 20px;
+		display: inline-block;
 	}
 
 	#homeContent > img {
