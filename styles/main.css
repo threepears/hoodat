@@ -115,7 +115,8 @@ hr {
   margin-bottom: 0;
   border-top: 0;
   padding: 8px 0 5px 15px;
-  background-color: #396a93; }
+  background-color: #396a93;
+  width: 305px; }
 
 .navSearch {
   width: 70%;

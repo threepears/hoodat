@@ -229,7 +229,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 				if (albumList[i].flags !== null) {
 					var counter = 0;
-					albumList[i].flags.forEach(flag => {
+					albumList[i].flags.forEach(function(flag) {
 						if (flag === "Compilation" || flag === "Interview" || flag === "Live Recording" || flag === "Video" || flag === "Bootleg" || flag === "Studio & Live") {
 							counter++;
 						}
