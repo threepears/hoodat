@@ -135,7 +135,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			console.log(response.data.artist.name);
 			console.log(response.data.artist.image[4]["#text"]);
 
-		  $scope.artistName = response.data.artist.name;
+		  // $scope.artistName = response.data.artist.name;
 
 			$scope.home = false;
 			$scope.results = true;
@@ -145,16 +145,16 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 		});
 
 
-		var makeAlbumInquiry = findmusic.getAlbums(artist);
-		makeAlbumInquiry.then(function(response) {
+		// var makeAlbumInquiry = findmusic.getAlbums(artist);
+		// makeAlbumInquiry.then(function(response) {
 
-			console.log(response);
+		// 	console.log(response);
 
-			$scope.allAlbums = response.data.topalbums.album;
+		// 	$scope.allAlbums = response.data.topalbums.album;
 
-		}, function(reason) {
-			alert("Failed: " + reason);
-		});
+		// }, function(reason) {
+		// 	alert("Failed: " + reason);
+		// });
 
 
 		// GET MUSICIAN VIDEOS FROM YOUTUBE
@@ -186,8 +186,18 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 		makeInfoInquiry.then(function(response) {
 
+			$scope.artistName = response.data.searchResponse.results[0].name.name;
+
 			// Get artist biography
-			var musicBio = response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].overview;
+			var musicBio;
+
+			if (response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].language === "English") {
+				musicBio = response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].overview;
+				console.log("English");
+			} else {
+				musicBio = response.data.searchResponse.results[0].name.musicBio.musicBioOverview[1].overview;
+				console.log("Spanish");
+			}
 
 			musicBio = musicBio.split('[/roviLink]').join('');
 			musicBio = musicBio.split('[roviLink="MA"]').join('');
@@ -218,7 +228,13 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 
 			// Get artist photo
-			$scope.artistPhoto = response.data.searchResponse.results[0].name.images[0].url;
+			if (response.data.searchResponse.results[0].name.images === null) {
+				$scope.artistPhoto = "http://2.bp.blogspot.com/-Gbn3dT1R9Yo/VPXSJ8lih_I/AAAAAAAALDQ/24wFWdfFvu4/s1600/sorry-image-not-available.png";
+				console.log("No photo");
+			} else {
+				$scope.artistPhoto = response.data.searchResponse.results[0].name.images[0].url;
+				console.log("Photo");
+			}
 
 
 			// Get artist albums
