@@ -191,7 +191,9 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			// Get artist biography
 			var musicBio;
 
-			if (response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].language === "English") {
+			if (response.data.searchResponse.results[0].name.musicBio.musicBioOverview === null) {
+				musicBio = response.data.searchResponse.results[0].name.musicBio.text;
+			}	else if (response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].language === "English") {
 				musicBio = response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].overview;
 				console.log("English");
 			} else {
@@ -199,18 +201,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 				console.log("Spanish");
 			}
 
-			musicBio = musicBio.split('[/roviLink]').join('');
-			musicBio = musicBio.split('[roviLink="MA"]').join('');
-			musicBio = musicBio.split('[roviLink="MN"]').join('');
-
-
-			for (var i = 0; i < musicBio.length; i++) {
-				if (musicBio[i] === "[") {
-					var beginLink = musicBio.slice(i, i + 25);
-					musicBio = musicBio.split(beginLink).join('');
-				}
-			}
-
+			musicBio = musicBio.replace(/\[[^\]]*]/g, '');
 
 			var removeEnd = musicBio.indexOf(" ~ ");
 
@@ -246,7 +237,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 				if (albumList[i].flags !== null) {
 					var counter = 0;
 					albumList[i].flags.forEach(function(flag) {
-						if (flag === "Compilation" || flag === "Interview" || flag === "Live Recording" || flag === "Video" || flag === "Bootleg" || flag === "Studio & Live") {
+						if (flag === "Compilation" || flag === "Interview" || flag === "Live Recording" || flag === "Video" || flag === "Bootleg" || flag === "Studio & Live" || albumList[i].year === null) {
 							counter++;
 						}
 					});
