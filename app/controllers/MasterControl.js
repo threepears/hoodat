@@ -245,6 +245,10 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 					if (counter === 0 && albumList[i].type === "Album") {
 						$scope.filteredAlbums.push(albumList[i]);
 					}
+				} else {
+					if (albumList[i].type === "Album") {
+						$scope.filteredAlbums.push(albumList[i]);
+					}
 				}
 			}
 
