@@ -220,8 +220,15 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 			// Get artist photo
 			if (response.data.searchResponse.results[0].name.images === null) {
-				$scope.artistPhoto = "http://2.bp.blogspot.com/-Gbn3dT1R9Yo/VPXSJ8lih_I/AAAAAAAALDQ/24wFWdfFvu4/s1600/sorry-image-not-available.png";
-				console.log("No photo");
+				var makeInquiry = findmusic.getMusician(artist);
+				makeInquiry.then(function(response) {
+
+					$scope.artistPhoto = response.data.artist.image[4]["#text"];
+
+				}, function(reason) {
+					alert("Failed: " + reason);
+				});
+
 			} else {
 				$scope.artistPhoto = response.data.searchResponse.results[0].name.images[0].url;
 				console.log("Photo");
@@ -246,7 +253,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 						$scope.filteredAlbums.push(albumList[i]);
 					}
 				} else {
-					if (albumList[i].type === "Album") {
+					if (albumList[i].type === "Album" && albumList[i].year !== null) {
 						$scope.filteredAlbums.push(albumList[i]);
 					}
 				}
