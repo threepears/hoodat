@@ -71,6 +71,9 @@ hr {
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer; }
 
+.nav > li {
+  padding-left: 15px; }
+
 .navbar-default {
   background-color: #4682B4;
   color: #fff;
@@ -100,28 +103,33 @@ hr {
 
 .navbar-default .navbar-nav > li > a {
   color: #fff;
-  font-family: 'Oswald', sans-serif; }
+  font-family: 'Oswald', sans-serif;
+  padding-left: 15px; }
 
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:active {
-  color: #b5cde3; }
+  color: #b5cde3;
+  background-color: #396a93; }
 
 .navbar-nav {
   margin-top: 0;
   margin-bottom: 0; }
 
+.navbar-collapse {
+  padding: 0; }
+
 .navbar-form {
   margin-top: 0;
   margin-bottom: 0;
   border-top: 0;
-  padding: 8px 0 5px 15px;
-  background-color: #396a93;
-  width: 305px; }
+  padding: 10px 0 5px 15px;
+  background-color: #396a93; }
 
 .navSearch {
-  width: 70%;
+  width: 66%;
   display: inline-block;
-  margin-right: 4%; }
+  margin-right: 3%;
+  padding-left: 15px; }
 
 .btnSearch {
   position: relative;
@@ -171,7 +179,8 @@ hr {
 
 .userOptions:hover {
   cursor: pointer;
-  color: #b5cde3; }
+  color: #b5cde3;
+  background-color: #396a93; }
 
 .artistimage {
   width: 100%; }
@@ -207,6 +216,9 @@ hr {
 
 .eachAlbum li {
   list-style: none; }
+
+.year {
+  color: #fbf48f; }
 
 .eachPastArtist {
   padding: 0; }
@@ -293,6 +305,9 @@ MEDIA QUERIES
   #homePage {
     margin: 10% auto; }
 
+  .navSearch {
+    width: 76%; }
+
   .artistimage {
     width: 50%;
     display: inline;
@@ -324,12 +339,15 @@ MEDIA QUERIES
   #homePage {
     margin: 50px auto; }
 
+  .navSearch {
+    width: 81%; }
+
   #homeContent > img {
     width: 80%; } }
 @media screen and (min-width: 768px) {
   .navbar-form {
     float: left !important;
-    width: 287px;
+    width: auto;
     padding: 0 15px;
     margin-right: 10px; }
 
@@ -337,7 +355,12 @@ MEDIA QUERIES
     margin: 8px 0 7px; }
 
   .navSearch {
-    width: auto; }
+    width: auto;
+    margin-right: 10px;
+    padding-left: 0; }
+
+  .nav > li {
+    padding-left: 0; }
 
   .frameContainer {
     width: 30%;

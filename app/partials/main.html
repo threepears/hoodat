@@ -51,7 +51,7 @@
 			<h2>DISCOGRAPHY</h2>
 			<div class="albumResults">
 				<ul class="eachAlbum">
-					<li ng-repeat="album in filteredAlbums | unique:'name' | orderBy:'year'">{{album.year | truncate: 4}} - {{album.title}}</li>
+					<li ng-repeat="album in filteredAlbums | unique:'name' | orderBy:'year'"><span class="year">{{album.year | truncate: 4}} -</span> {{album.title}}</li>
 				</ul>
 			</div>
 		</div>
