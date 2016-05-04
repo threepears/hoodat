@@ -157,29 +157,8 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 		// });
 
 
-		// GET MUSICIAN VIDEOS FROM YOUTUBE
-		var makeVideoInquiry = findmusic.getVideos(artist);
-		makeVideoInquiry.then(function(response) {
-			console.log(response);
-			$scope.allVideos = response.data.items;
-			console.log(response.data.items);
 
-			if (response.data.items.length === 0) {
-				$scope.videoResults = false;
-				$scope.error = "Sorry...no videos for this artist!";
-			}
-
-			$scope.getIframeSrc = function (videoId) {
-			  return 'https://www.youtube.com/embed/' + videoId;
-			};
-
-		}, function(reason) {
-			$scope.videoResults = false;
-			$scope.error = "Sorry ... no videos for this artist!";
-		});
-
-
-		// GET MUSICIAN BIO, ALBUMS, AND DISCOGRAPHY FROM ROVI API
+		// GET MUSICIAN BIO, ALBUMS, AND DISCOGRAPHY FROM ROVI API (CONTAINS VIDEO API SEARCH)
 		var signature = genSig();
 
 		var makeInfoInquiry = findmusic.getOtherInfo(artist, signature);
@@ -259,9 +238,32 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 				}
 			}
 
+
+			// GET MUSICIAN VIDEOS FROM YOUTUBE
+			var makeVideoInquiry = findmusic.getVideos($scope.artistName);
+			makeVideoInquiry.then(function(response) {
+				console.log(response);
+				$scope.allVideos = response.data.items;
+				console.log(response.data.items);
+
+				if (response.data.items.length === 0) {
+					$scope.videoResults = false;
+					$scope.error = "Sorry...no videos for this artist!";
+				}
+
+				$scope.getIframeSrc = function (videoId) {
+				  return 'https://www.youtube.com/embed/' + videoId;
+				};
+
+			}, function(reason) {
+				$scope.videoResults = false;
+				$scope.error = "Sorry ... no videos for this artist!";
+			});
+
 		}, function(reason) {
 			alert("Failed: " + reason);
 		});
+
 
 	};
 

@@ -72,7 +72,7 @@ app.factory("FindMusic",
       return $q(function(resolve,reject) {
         $http({
           method: 'GET',
-          url: "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + artist + "&type=video&videoCaption=closedCaption&videoCategoryId=10&maxResults=3&key=" + youtube
+          url: "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + artist + "&type=video&order=viewCount&videoCategoryId=10&maxResults=3&key=" + youtube
         }).then(function (response) {
           console.log(response);
           resolve(response);
