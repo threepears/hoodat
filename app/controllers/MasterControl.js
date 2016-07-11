@@ -17,6 +17,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 	$scope.artistBio = "";
 	$scope.searchText = "Search For An Artist";
 	$scope.loginMessage = "PLEASE LOGIN";
+	$scope.searchErrorMessage = null;
 	$scope.homeMessage = $sce.trustAsHtml(homeText);
 
 
@@ -182,6 +183,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 			var musicBio;
 
 			if (response.data.searchResponse.results[0].name.musicBio === null) {
+				$scope.searchErrorMessage = "Could not find your artist. Please search again!";
 				$scope.returnHome();
 				return;
 			} else if (response.data.searchResponse.results[0].name.musicBio.musicBioOverview === null) {

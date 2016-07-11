@@ -150,6 +150,12 @@ hr {
   position: relative;
   left: 10px; }
 
+#searchError {
+  color: #fbf48f;
+  font-size: 1.2em;
+  font-style: italic;
+  margin-bottom: 10px; }
+
 #loginOrRegister {
   width: 150px;
   margin: 0 auto;

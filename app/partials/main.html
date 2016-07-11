@@ -7,6 +7,10 @@
 			<img src="./images/hoodat_logo_white.png" alt="Hoodat Logo">
 			<p id="subtitle">THE MUSICIAN SEARCH APP</p>
 
+			<div id="searchError" ng-show="searchErrorMessage">
+				{{searchErrorMessage}}
+			</div>
+
 			<input class="middle form-control" type="text" id="search" ng-keypress="returnKey($event)" placeholder="Search For An Artist" ng-model="$parent.searchData">
 
 			<button type="button" class="btn btn-lg btn-danger" ng-click="$parent.search()" id="homeSearch">Search</button>
