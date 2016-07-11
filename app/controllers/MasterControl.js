@@ -76,6 +76,12 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
   	}
   };
 
+  $scope.returnHome = function() {
+  		$scope.home = true;
+			$scope.results = false;
+			$scope.searchData = "";
+  }
+
 
   /* Perform artist searches: bio, discography, and videos */
 	$scope.search = function() {
@@ -127,22 +133,22 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 		}
 
 
-		var makeInquiry = findmusic.getMusician(artist);
-		makeInquiry.then(function(response) {
+		// var makeInquiry = findmusic.getMusician(artist);
+		// makeInquiry.then(function(response) {
 
-			console.log(response);
+		// 	console.log(response);
 
-			console.log(response.data.artist.name);
-			console.log(response.data.artist.image[4]["#text"]);
+		// 	console.log(response.data.artist.name);
+		// 	console.log(response.data.artist.image[4]["#text"]);
 
 		  // $scope.artistName = response.data.artist.name;
 
-			$scope.home = false;
-			$scope.results = true;
+		// 	$scope.home = false;
+		// 	$scope.results = true;
 
-		}, function(reason) {
-			alert("Failed: " + reason);
-		});
+		// }, function(reason) {
+		// 	alert("Failed: " + reason);
+		// });
 
 
 		// var makeAlbumInquiry = findmusic.getAlbums(artist);
@@ -165,12 +171,20 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 		makeInfoInquiry.then(function(response) {
 
+			$scope.home = false;
+			$scope.results = true;
+
 			$scope.artistName = response.data.searchResponse.results[0].name.name;
+
+			console.log(response.data.searchResponse.results[0].name.musicBio);
 
 			// Get artist biography
 			var musicBio;
 
-			if (response.data.searchResponse.results[0].name.musicBio.musicBioOverview === null) {
+			if (response.data.searchResponse.results[0].name.musicBio === null) {
+				$scope.returnHome();
+				return;
+			} else if (response.data.searchResponse.results[0].name.musicBio.musicBioOverview === null) {
 				musicBio = response.data.searchResponse.results[0].name.musicBio.text;
 			}	else if (response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].language === "English") {
 				musicBio = response.data.searchResponse.results[0].name.musicBio.musicBioOverview[0].overview;
