@@ -98,6 +98,22 @@ app.factory("FindMusic",
       });
     },
 
+    getAlbumArt: function(albumId, signature){
+      console.log("INSIDEGETALBUMARTFUNCTION", albumId);
+      return $q(function(resolve,reject) {
+        $http({
+          method: 'GET',
+          url: "http://cors-request-server.herokuapp.com/album/" + albumId + "/" + signature
+          // url: "http://api.rovicorp.com/data/v1.1/album/images?apikey=" + rovi + "&sig=" + signature + "&albumid=" + albumId + "&imagesize=200-300x200-300"
+        }).then(function (response) {
+          console.log("ALBUMART", response.data.album.images);
+          resolve(response);
+        }, function (error) {
+          reject(error);
+        });
+      });
+    },
+
     getEchonestVideos: function(artist) {
       return $q(function(resolve,reject) {
         $http({

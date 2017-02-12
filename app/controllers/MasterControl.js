@@ -246,6 +246,14 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$firebase
 
 					if (counter === 0 && albumList[i].type === "Album") {
 						$scope.filteredAlbums.push(albumList[i]);
+						// This commented chunk would get album art, IF Rovi had it...which, apparently, they're not that great at.
+
+						// console.log("INSIDEREQUEST");
+						// var getAlbumArt = findmusic.getAlbumArt(albumList[i].ids.albumId, signature);
+						// getAlbumArt.then(function(response) {
+						// 	console.log("ALBUMARTRETURN", response);
+						// 	$scope.filteredAlbums.push(albumList[i]);
+						// });
 					}
 				} else {
 					if (albumList[i].type === "Album" && albumList[i].year !== null) {
