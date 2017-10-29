@@ -18,6 +18,12 @@ Create a new repository and enter the following command:
 $ git clone https://github.com/threepears/hoodat.git
 ```
 
+Once that is done, make sure you have http-server installed globally on your computer. You can do that by typing the following into your Terminal:
+
+```
+$ npm install http-server -g
+```
+
 Then start your http server in the project folder with this Terminal command:
 
 ```sh
